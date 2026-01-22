@@ -1,0 +1,53 @@
+{
+    "Western": [
+        {
+            "name": "파스타",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 2,
+            "tags": ["든든함", "면"]
+        },
+        {
+            "name": "스테이크",
+            "meal_time": "저녁",
+            "min_people": 2,
+            "max_people": 4,
+            "tags": ["고기", "든든함"]
+        },
+        {
+            "name": "피자",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 3,
+            "max_people": 5,
+            "tags": ["든든함", "기름짐"]
+        },
+        {
+            "name": "리조또",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 2,
+            "max_people": 4,
+            "tags": ["밥", "든든함"]
+        },
+        {
+            "name": "라자냐",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 2,
+            "max_people": 4,
+            "tags": ["든든함", "면"]
+        },
+        {
+            "name": "샐러드",
+            "meal_time": ["아침", "점심"],
+            "min_people": 1,
+            "max_people": 4,
+            "tags": ["가벼움", "담백함"]
+        },
+        {
+            "name": "스프",
+            "meal_time": ["아침", "점심"],
+            "min_people": 1,
+            "max_people": 4,
+            "tags": ["국물", "담백함", "가벼움"]
+        }
+    ]
+}

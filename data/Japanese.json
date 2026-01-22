@@ -1,0 +1,60 @@
+{
+    "Japanese": [
+        {
+            "name": "초밥",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 4,
+            "tags": ["담백함", "밥"]
+        },
+        {
+            "name": "라멘",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 2,
+            "tags": ["국물", "면", "매움", "든든함"]
+        },
+        {
+            "name": "돈까스",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 2,
+            "tags": ["기름짐", "고기"]
+        },
+        {
+            "name": "카레",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 4,
+            "tags": ["든든함", "밥"]
+        },
+        {
+            "name": "우동",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 5,
+            "tags": ["담백함", "면", "국물"]
+        },
+        {
+            "name": "소바",
+            "meal_time": "점심",
+            "min_people": 1,
+            "max_people": 4,
+            "tags": ["담백함", "면"]
+        },
+        {
+            "name": "덮밥",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 4,
+            "tags": ["든든함", "밥", "고기"]
+        },
+        {
+            "name": "타코야끼",
+            "meal_time": "점심",
+            "min_people": 1,
+            "max_people": 3,
+            "tags": ["간식", "기름짐"]
+        }
+    ]
+}

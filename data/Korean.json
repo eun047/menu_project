@@ -1,0 +1,46 @@
+{
+    "Korean":[
+        {
+            "name": "김치찌개",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 2,
+            "max_people": 5,
+            "tags": ["국물", "매움", "든든함"]
+        },
+        {
+            "name": "제육볶음",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 4,
+            "tags": ["매움", "고기", "든든함"]
+        },
+        {
+            "name": "비빔밥",
+            "meal_time": ["점심"],
+            "min_people": 1,
+            "max_people": 2,
+            "tags": ["담백함", "밥"]
+        },
+        {
+            "name": "국밥",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 3,
+            "tags": ["국물", "든든함", "밥"]
+        },
+        {
+            "name": "불고기",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 2,
+            "tags": ["고기", "든든함"]
+        },
+        {
+            "name": "삼겹살",
+            "meal_time": "저녁",
+            "min_people": 2,
+            "max_people": 5,
+            "tags": ["고기", "기름짐"]
+        }
+    ]
+}

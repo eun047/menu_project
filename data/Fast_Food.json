@@ -1,0 +1,39 @@
+{
+    "Fast_Food": [
+        {
+            "name": "치킨",
+            "meal_time": ["저녁"],
+            "min_people": 2,
+            "max_people": 5,
+            "tags": ["고기", "기름짐"]
+        },
+        {
+            "name": "피자",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 2,
+            "max_people": 5,
+            "tags": ["기름짐", "든든함"]
+        },
+        {
+            "name": "샌드위치",
+            "meal_time": ["아침", "점심"],
+            "min_people": 1,
+            "max_people": 1,
+            "tags": ["가벼움", "간식"]
+        },
+        {
+            "name": "토스트",
+            "meal_time": ["아침"],
+            "min_people": 1,
+            "max_people": 1,
+            "tags": ["가벼움", "간식"]
+        },
+        {
+            "name": "햄버거",
+            "meal_time": "점심",
+            "min_people": 1,
+            "max_people": 3,
+            "tags": ["든든함", "고기"]
+        }
+    ]
+}

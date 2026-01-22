@@ -1,0 +1,39 @@
+{
+    "Street_Food": [
+        {
+            "name": "떡볶이",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 5,
+            "tags": ["매움", "간식"]
+        },
+        {
+            "name": "김밥",
+            "meal_time": "점심",
+            "min_people": 1,
+            "max_people": 5,
+            "tags": ["가벼움", "밥"]
+        },
+        {
+            "name": "어묵",
+            "meal_time": "점심",
+            "min_people": 1,
+            "max_people": 5,
+            "tags": ["국물", "간식"]
+        },
+        {
+            "name": "순대",
+            "meal_time": "점심",
+            "min_people": 1,
+            "max_people": 5,
+            "tags": ["간식", "고기"]
+        },
+        {
+            "name": "라면",
+            "meal_time": "점심",
+            "min_people": 1,
+            "max_people": 5,
+            "tags": ["국물", "면", "매움"]
+        }
+    ]
+}

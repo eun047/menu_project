@@ -1,0 +1,46 @@
+{
+    "Chinese": [
+        {
+            "name": "짜장면",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 5,
+            "tags": ["든든함", "면"]
+        },
+        {
+            "name": "짬뽕",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 5,
+            "tags": ["국물", "매움", "면", "든든함"]
+        },
+        {
+            "name": "탕수육",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 2,
+            "max_people": 5,
+            "tags": ["고기", "기름짐"]
+        },
+        {
+            "name": "마파두부",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 2,
+            "max_people": 5,
+            "tags": ["매움", "밥"]
+        },
+        {
+            "name": "베이징 덕",
+            "meal_time": "저녁",
+            "min_people": 2,
+            "max_people": 5,
+            "tags": ["고기", "기름짐"]
+        },
+        {
+            "name": "딤섬",
+            "meal_time": ["점심", "저녁"],
+            "min_people": 1,
+            "max_people": 5,
+            "tags": ["가벼움", "간식", "고기"]
+        }
+    ]
+}
