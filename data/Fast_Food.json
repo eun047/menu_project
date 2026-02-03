@@ -30,7 +30,7 @@
         },
         {
             "name": "햄버거",
-            "meal_time": "점심",
+            "meal_time": ["점심"],
             "min_people": 1,
             "max_people": 3,
             "tags": ["든든함", "고기"]

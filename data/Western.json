@@ -9,7 +9,7 @@
         },
         {
             "name": "스테이크",
-            "meal_time": "저녁",
+            "meal_time": ["저녁"],
             "min_people": 2,
             "max_people": 4,
             "tags": ["고기", "든든함"]
