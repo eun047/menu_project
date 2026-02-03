@@ -1,5 +1,5 @@
 {
-    "Fast_Food": [
+    "menus": [
         {
             "name": "치킨",
             "meal_time": ["저녁"],

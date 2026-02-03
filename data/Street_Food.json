@@ -1,5 +1,5 @@
 {
-    "Street_Food": [
+    "menus": [
         {
             "name": "떡볶이",
             "meal_time": ["점심", "저녁"],

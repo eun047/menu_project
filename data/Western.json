@@ -1,5 +1,5 @@
 {
-    "Western": [
+    "menus": [
         {
             "name": "파스타",
             "meal_time": ["점심", "저녁"],
