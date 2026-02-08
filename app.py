@@ -9,7 +9,7 @@ def load_all_menus(data_dir = "data"):
         if filename.endswith(".json"):
             file_path = os.path.join(data_dir, filename)
 
-            with open(file_path, "r", endcoding="utf-8") as f:
+            with open(file_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 menus = data.get("menus", [])
                 all_menus.extend(menus)
