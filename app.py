@@ -16,7 +16,14 @@ def load_all_menus(data_dir = "data"):
 
     return all_menus
 
-def get_user_input():
+def select_recommend_type():
+    print("\n추천 방식을 선택하세요")
+    print("1: 상황 기반 추천 (식사 시간 + 인원)")
+    print("2: 태그 기반 추천")
+
+    return input("번호 입력: ").strip()
+
+def get_condition_input():
     print("=== 메뉴 추천 프로그램 ===")
 
     meal_time = input("식사 시간 입력 (아침/점심/저녁): ").strip()
@@ -32,7 +39,36 @@ def get_user_input():
 
     return meal_time, people
 
-def recommend_menu(menus, meal_time, people):
+def collect_all_tags(menus):
+    tag_set = set()
+
+    for menu in menus:
+        for tag in menu["tags"]:
+            tag_set.add(tag)
+    
+    return sorted(tag_set)
+
+def get_tag_input(all_tags):
+    print("\n원하는 태그를 선택하세요 (복수 선택 가능)")
+
+    for idx, tag in enumerate(all_tags, start=1):
+        print(f"{idx}: {tag}")
+
+    raw_input = input("번호 입력 (쉼표로 구분, 예: 1,3): ").strip()
+    selected_indexes = raw_input.split(",")
+
+    selected_tags = []
+
+    for idx in selected_indexes:
+        idx = idx.strip()
+        if idx.isdigit():
+            num = int(idx)
+            if 1 <= num <= len(all_tags):
+                selected_tags.append(all_tags[num - 1])
+
+    return selected_tags
+
+def recommend_by_condition(menus, meal_time, people):
     candidates = []
 
     for menu in menus:
@@ -40,6 +76,18 @@ def recommend_menu(menus, meal_time, people):
             if menu["min_people"] <= people <= menu["max_people"]:
                 candidates.append(menu)
         
+    if not candidates:
+        return None
+
+    return random.choice(candidates)
+
+def recommend_by_tags(menus, selected_tags):
+    candidates = []
+
+    for menu in menus:
+        if any(tag in menu["tags"] for tag in selected_tags):
+            candidates.append(menu)
+
     if not candidates:
         return None
 
@@ -59,8 +107,23 @@ def print_result(menu):
 
 def main():
     menus = load_all_menus()
-    meal_time, people = get_user_input()
-    result = recommend_menu(menus, meal_time, people)
+    all_tags = collect_all_tags(menus)
+
+    print("=== 메뉴 추천 프로그램 ===")
+    mode = select_recommend_type()
+
+    if mode == "1":
+        meal_time, people = get_condition_input()
+        result = recommend_by_condition(menus, meal_time, people)
+
+    elif mode == "2":
+        selected_tags = get_tag_input(all_tags)
+        result = recommend_by_tags(menus, selected_tags)
+
+    else:
+        print("잘못된 입력입니다.")
+        return
+
     print_result(result)
 
 if __name__ == "__main__":
