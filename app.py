@@ -7,7 +7,7 @@ def load_all_menus(data_dir = "data"):
 
     for filename in os.listdir(data_dir):
         if filename.endswith(".json"):
-            file_path = os.path.json(data_dir, filename)
+            file_path = os.path.join(data_dir, filename)
 
             with open(file_path, "r", endcoding="utf-8") as f:
                 data = json.load(f)
