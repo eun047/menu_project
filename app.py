@@ -1,6 +1,9 @@
+from flask import Flask, render_template, request
 import os
 import json
 import random
+
+app = Flask(__name__)
 
 # 데이터 로딩
 def load_all_menus(data_dir = "data"):
@@ -17,29 +20,6 @@ def load_all_menus(data_dir = "data"):
 
     return all_menus
 
-# 추천 방식 선택
-def select_recommend_type():
-    print("\n추천 방식을 선택하세요")
-    print("1: 상황 기반 추천 (식사 시간 + 인원)")
-    print("2: 태그 기반 추천")
-
-    return input("번호 입력: ").strip()
-
-# 상황 기반 입력
-def get_condition_input():
-    meal_time = input("식사 시간 입력 (아침/점심/저녁): ").strip()
-
-    print("인원 수 선택")
-    print("1: 1명")
-    print("2: 2명")
-    print("3: 3명")
-    print("4: 4명")
-    print("5: 5명 이상")
-
-    people = int(input("번호 입력: ").strip())
-
-    return meal_time, people
-
 # 태그 목록 수집
 def collect_all_tags(menus):
     tag_set = set()
@@ -50,26 +30,6 @@ def collect_all_tags(menus):
     
     return sorted(tag_set)
 
-# 태그 기반 입력
-def get_tag_input(all_tags):
-    print("\n원하는 태그를 선택하세요 (복수 선택 가능)")
-
-    for idx, tag in enumerate(all_tags, start=1):
-        print(f"{idx}: {tag}")
-
-    raw_input = input("번호 입력 (쉼표로 구분, 예: 1,3): ").strip()
-    selected_indexes = raw_input.split(",")
-
-    selected_tags = []
-
-    for idx in selected_indexes:
-        idx = idx.strip()
-        if idx.isdigit():
-            num = int(idx)
-            if 1 <= num <= len(all_tags):
-                selected_tags.append(all_tags[num - 1])
-
-    return selected_tags
 
 # 상황 기반 추천 로직
 def recommend_by_condition(menus, meal_time, people):
@@ -98,41 +58,31 @@ def recommend_by_tags(menus, selected_tags):
 
     return random.choice(candidates)
 
-# 결과 출력
-def print_result(menu):
-    print("\n=== 추천 결과 ===")
-
-    if menu is None:
-        print("조건에 맞는 메뉴가 없습니다.")
-        return
-
-    print(f"🍽 메뉴 이름: {menu['name']}")
-    print(f"👥 추천 인원: {menu['min_people']} ~ {menu['max_people']}명")
-    print(f"🕒 가능한 시간: {', '.join(menu['meal_time'])}")
-    print(f"🏷 태그: {', '.join(menu['tags'])}")
-
-# 메인 흐름
-def main():
+# 메인 페이지
+@app.route("/", methods=["GET", "POST"])
+def index():
     menus = load_all_menus()
     all_tags = collect_all_tags(menus)
+    result = None
 
-    print("=== 메뉴 추천 프로그램 ===")
-    mode = select_recommend_type()
+    if request.method == "POST":
+        mode = request.form.get("mode")
 
-    if mode == "1":
-        meal_time, people = get_condition_input()
-        result = recommend_by_condition(menus, meal_time, people)
+        if mode == "condition":
+            meal_time = request.form.get("meal_time")
+            people = int(request.form.get("people"))
+            result = recommend_by_condition(menus, meal_time, people)
+        
+        elif mode == "tags":
+            selected_tags = request.form.getlist("tags")
+            result = recommend_by_tags(menus, selected_tags)
+    
+    return render_template(
+        "index.html",
+        tags=all_tags,
+        result=result
+    )
 
-    elif mode == "2":
-        selected_tags = get_tag_input(all_tags)
-        result = recommend_by_tags(menus, selected_tags)
-
-    else:
-        print("잘못된 입력입니다.")
-        return
-
-    print_result(result)
-
-# 실행 진입점
+# 실행
 if __name__ == "__main__":
-    main()
+    app.run(debug=True)
