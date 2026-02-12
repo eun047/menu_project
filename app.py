@@ -2,6 +2,7 @@ import os
 import json
 import random
 
+# 데이터 로딩
 def load_all_menus(data_dir = "data"):
     all_menus = []
 
@@ -16,6 +17,7 @@ def load_all_menus(data_dir = "data"):
 
     return all_menus
 
+# 추천 방식 선택
 def select_recommend_type():
     print("\n추천 방식을 선택하세요")
     print("1: 상황 기반 추천 (식사 시간 + 인원)")
@@ -23,9 +25,8 @@ def select_recommend_type():
 
     return input("번호 입력: ").strip()
 
+# 상황 기반 입력
 def get_condition_input():
-    print("=== 메뉴 추천 프로그램 ===")
-
     meal_time = input("식사 시간 입력 (아침/점심/저녁): ").strip()
 
     print("인원 수 선택")
@@ -39,6 +40,7 @@ def get_condition_input():
 
     return meal_time, people
 
+# 태그 목록 수집
 def collect_all_tags(menus):
     tag_set = set()
 
@@ -48,6 +50,7 @@ def collect_all_tags(menus):
     
     return sorted(tag_set)
 
+# 태그 기반 입력
 def get_tag_input(all_tags):
     print("\n원하는 태그를 선택하세요 (복수 선택 가능)")
 
@@ -68,6 +71,7 @@ def get_tag_input(all_tags):
 
     return selected_tags
 
+# 상황 기반 추천 로직
 def recommend_by_condition(menus, meal_time, people):
     candidates = []
 
@@ -81,6 +85,7 @@ def recommend_by_condition(menus, meal_time, people):
 
     return random.choice(candidates)
 
+# 태그 기반 추천 로직 (하나라도 포함되면 후보)
 def recommend_by_tags(menus, selected_tags):
     candidates = []
 
@@ -93,6 +98,7 @@ def recommend_by_tags(menus, selected_tags):
 
     return random.choice(candidates)
 
+# 결과 출력
 def print_result(menu):
     print("\n=== 추천 결과 ===")
 
@@ -105,6 +111,7 @@ def print_result(menu):
     print(f"🕒 가능한 시간: {', '.join(menu['meal_time'])}")
     print(f"🏷 태그: {', '.join(menu['tags'])}")
 
+# 메인 흐름
 def main():
     menus = load_all_menus()
     all_tags = collect_all_tags(menus)
@@ -126,5 +133,6 @@ def main():
 
     print_result(result)
 
+# 실행 진입점
 if __name__ == "__main__":
     main()
