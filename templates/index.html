@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>메뉴 추천 프로그램</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .menu-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🍽 메뉴 추천 프로그램</h1>
+
+    <form method="POST">
+
+        <!-- 추천 방식 선택 -->
+        <div class="section">
+            <h3>추천 방식 선택</h3>
+
+            <label>
+                <input type="radio" name="mode" value="condition" required>
+                상황 기반 추천
+            </label>
+
+            <label>
+                <input type="radio" name="mode" value="tags">
+                태그 기반 추천
+            </label>
+        </div>
+
+        <!-- 상황 기반 입력 -->
+        <div class="section">
+            <h3>식사 시간</h3>
+            <select name="meal_time">
+                <option value="아침">아침</option>
+                <option value="점심">점심</option>
+                <option value="저녁">저녁</option>
+            </select>
+
+            <h3>인원 수</h3>
+            <select name="people">
+                <option value="1">1명</option>
+                <option value="2">2명</option>
+                <option value="3">3명</option>
+                <option value="4">4명</option>
+                <option value="5">5명 이상</option>
+            </select>
+        </div>
+
+        <!-- 태그 기반 입력 -->
+        <div class="section">
+            <h3>태그 선택 (복수 선택 가능)</h3>
+
+            {% for tag in tags %}
+                <label>
+                    <input type="checkbox" name="tags" value="{{ tag }}">
+                    {{ tag }}
+                </label><br>
+            {% endfor %}
+        </div>
+
+        <button type="submit">추천 받기</button>
+
+    </form>
+
+    <!-- 결과 출력 -->
+    {% if result %}
+        <div class="result">
+            <div class="menu-title">🍽 {{ result.name }}</div>
+            <p>👥 추천 인원: {{ result.min_people }} ~ {{ result.max_people }}명</p>
+            <p>🕒 가능한 시간: {{ result.meal_time | join(', ') }}</p>
+            <p>🏷 태그: {{ result.tags | join(', ') }}</p>
+        </div>
+    {% elif result is not none %}
+        <div class="result">
+            조건에 맞는 메뉴가 없습니다.
+        </div>
+    {% endif %}
+
+</body>
+</html>
