@@ -70,7 +70,7 @@ def index():
 
         if mode == "condition":
             meal_time = request.form.get("meal_time")
-            people = int(request.form.get("people"))
+            people = int(request.form.get("people", 1))
             result = recommend_by_condition(menus, meal_time, people)
         
         elif mode == "tags":
