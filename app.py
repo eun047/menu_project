@@ -58,30 +58,45 @@ def recommend_by_tags(menus, selected_tags):
 
     return random.choice(candidates)
 
-# 메인 페이지
-@app.route("/", methods=["GET", "POST"])
+# 1️⃣ 메인 페이지 (방식 선택)
+@app.route("/")
 def index():
+    return render_template("index.html")
+
+
+# 2️⃣ 상황 선택 페이지
+@app.route("/condition")
+def condition_page():
+    return render_template("condition.html")
+
+
+# 3️⃣ 태그 선택 페이지
+@app.route("/tags")
+def tags_page():
     menus = load_all_menus()
     all_tags = collect_all_tags(menus)
+    return render_template("tags.html", tags=all_tags)
+
+
+# 4️⃣ 결과 페이지
+@app.route("/result", methods=["POST"])
+def result_page():
+    menus = load_all_menus()
     result = None
 
-    if request.method == "POST":
-        mode = request.form.get("mode")
+    mode = request.form.get("mode")
 
-        if mode == "condition":
-            meal_time = request.form.get("meal_time")
-            people = int(request.form.get("people", 1))
-            result = recommend_by_condition(menus, meal_time, people)
-        
-        elif mode == "tags":
-            selected_tags = request.form.getlist("tags")
-            result = recommend_by_tags(menus, selected_tags)
-    
-    return render_template(
-        "index.html",
-        tags=all_tags,
-        result=result
-    )
+    if mode == "condition":
+        meal_time = request.form.get("meal_time")
+        people = int(request.form.get("people", 1))
+        result = recommend_by_condition(menus, meal_time, people)
+
+    elif mode == "tags":
+        selected_tags = request.form.getlist("tags")
+        result = recommend_by_tags(menus, selected_tags)
+
+    return render_template("result.html", result=result)
+
 
 # 실행
 if __name__ == "__main__":
