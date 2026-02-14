@@ -2,65 +2,271 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>상황별 추천</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상황 기반 추천</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            margin-top: 60px;
+            background-color: #faf8f2;
+            font-family: 'Noto Sans KR', sans-serif;
+            min-height: 100vh;
+            padding: 0;
         }
-        form {
-            margin-top: 30px;
+
+        /* 상단 네비게이션 */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            padding: 20px 24px 10px;
+            gap: 8px;
         }
-        select, input {
-            padding: 8px;
-            margin: 10px;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
+
+        .back-btn {
+            background: none;
             border: none;
-            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15px;
+            color: #555;
+            padding: 0;
         }
-        button:hover {
-            background-color: #45a049;
+
+        .back-btn:hover {
+            color: #222;
         }
-        a {
-            display: block;
-            margin-top: 30px;
+
+        .page-title {
+            padding: 8px 24px 24px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #222;
+        }
+
+        /* 카드 컨테이너 */
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            margin: 0 16px;
+            padding: 28px 24px 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* 섹션 */
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .section-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* 인원수 버튼 그리드 (2x2) */
+        .people-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* 시간대 버튼 그리드 (3열) */
+        .time-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* 공통 버튼 스타일 */
+        .select-btn {
+            background: #f5f4f0;
+            border: 2px solid transparent;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: all 0.18s ease;
+            color: #444;
+        }
+
+        .select-btn:hover {
+            background: #eeecea;
+        }
+
+        .select-btn.selected {
+            background: #fff7f0;
+            border-color: #f4845f;
+            color: #e86835;
+        }
+
+        /* 인원수 버튼 */
+        .people-btn {
+            padding: 18px 10px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        /* 시간대 버튼 */
+        .time-btn {
+            padding: 16px 8px 14px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-emoji {
+            font-size: 26px;
+            line-height: 1;
+        }
+
+        /* 추천받기 버튼 */
+        .submit-btn {
+            width: 100%;
+            margin-top: 24px;
+            padding: 18px;
+            background: #e0ddd6;
+            color: #aaa;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: not-allowed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .submit-btn.active {
+            background: #f4845f;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(244, 132, 95, 0.35);
+        }
+
+        .submit-btn.active:hover {
+            background: #e86835;
+            transform: translateY(-1px);
         }
     </style>
 </head>
 <body>
 
-    <h1>🍳 상황별 메뉴 추천</h1>
+    <nav class="top-nav">
+        <button class="back-btn" onclick="history.back()">← 돌아가기</button>
+    </nav>
 
-    <form action="/result" method="POST">
-        <input type="hidden" name="mode" value="condition">
+    <div class="page-title">상황 기반 추천</div>
 
-        <div>
-            <label>식사 시간:</label>
-            <select name="meal_time">
-                <option value="아침">아침</option>
-                <option value="점심">점심</option>
-                <option value="저녁">저녁</option>
-            </select>
-        </div>
+    <div class="card">
+        <form action="/result" method="POST" id="conditionForm">
 
-        <div>
-            <label>인원 수:</label>
-            <input type="number" name="people" min="1" value="1">
-        </div>
+            <input type="hidden" name="mode" value="condition">
+            <input type="hidden" name="meal_time" id="mealTimeInput">
+            <input type="hidden" name="people" id="peopleInput">
 
-        <div>
-            <button type="submit">추천 받기</button>
-        </div>
-    </form>
+            <!-- 인원수 섹션 -->
+            <div class="section">
+                <div class="section-header">
+                    <span style="color:#e86835; font-size:20px;">🧑‍🤝‍🧑</span>
+                    <span class="section-label">인원수를 선택하세요</span>
+                </div>
+                <div class="people-grid">
+                    <button type="button" class="select-btn people-btn" onclick="selectPeople(this, 1)">1명</button>
+                    <button type="button" class="select-btn people-btn" onclick="selectPeople(this, 2)">2명</button>
+                    <button type="button" class="select-btn people-btn" onclick="selectPeople(this, 3)">3-4명</button>
+                    <button type="button" class="select-btn people-btn" onclick="selectPeople(this, 5)">5명 이상</button>
+                </div>
+            </div>
 
-    <a href="/">← 메인으로 돌아가기</a>
+            <!-- 시간대 섹션 -->
+            <div class="section">
+                <div class="section-header">
+                    <span style="color:#e86835; font-size:20px;">🕐</span>
+                    <span class="section-label">시간대를 선택하세요</span>
+                </div>
+                <div class="time-grid">
+                    <button type="button" class="select-btn time-btn" onclick="selectTime(this, '아침')">
+                        <span class="time-emoji">🌅</span>
+                        아침
+                    </button>
+                    <button type="button" class="select-btn time-btn" onclick="selectTime(this, '점심')">
+                        <span class="time-emoji">☀️</span>
+                        점심
+                    </button>
+                    <button type="button" class="select-btn time-btn" onclick="selectTime(this, '저녁')">
+                        <span class="time-emoji">🌙</span>
+                        저녁
+                    </button>
+                </div>
+            </div>
+
+            <!-- 추천받기 버튼 -->
+            <button type="submit" class="submit-btn" id="submitBtn">
+                ✦ 메뉴 추천받기
+            </button>
+
+        </form>
+    </div>
+
+<script>
+    let selectedTime = "";
+    let selectedPeople = "";
+
+    function clearSelection(group) {
+        group.querySelectorAll("button").forEach(btn => {
+            btn.classList.remove("selected");
+        });
+    }
+
+    function selectTime(button, value) {
+        clearSelection(button.closest(".time-grid"));
+        button.classList.add("selected");
+        selectedTime = value;
+        document.getElementById("mealTimeInput").value = value;
+        updateSubmitBtn();
+    }
+
+    function selectPeople(button, value) {
+        clearSelection(button.closest(".people-grid"));
+        button.classList.add("selected");
+        selectedPeople = value;
+        document.getElementById("peopleInput").value = value;
+        updateSubmitBtn();
+    }
+
+    function updateSubmitBtn() {
+        const btn = document.getElementById("submitBtn");
+        if (selectedTime && selectedPeople) {
+            btn.classList.add("active");
+        } else {
+            btn.classList.remove("active");
+        }
+    }
+
+    document.getElementById("conditionForm").addEventListener("submit", function(e) {
+        if (!selectedTime || !selectedPeople) {
+            alert("인원수와 시간대를 모두 선택해주세요.");
+            e.preventDefault();
+        }
+    });
+</script>
 
 </body>
 </html>
