@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상황별 추천</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 60px;
+        }
+        form {
+            margin-top: 30px;
+        }
+        select, input {
+            padding: 8px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            display: block;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🍳 상황별 메뉴 추천</h1>
+
+    <form action="/result" method="POST">
+        <input type="hidden" name="mode" value="condition">
+
+        <div>
+            <label>식사 시간:</label>
+            <select name="meal_time">
+                <option value="breakfast">아침</option>
+                <option value="lunch">점심</option>
+                <option value="dinner">저녁</option>
+            </select>
+        </div>
+
+        <div>
+            <label>인원 수:</label>
+            <input type="number" name="people" min="1" value="1">
+        </div>
+
+        <div>
+            <button type="submit">추천 받기</button>
+        </div>
+    </form>
+
+    <a href="/">← 메인으로 돌아가기</a>
+
+</body>
+</html>
