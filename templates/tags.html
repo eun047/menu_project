@@ -2,65 +2,219 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>태그별 추천</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>태그 기반 추천</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            margin-top: 50px;
+            background-color: #faf8f2;
+            font-family: 'Noto Sans KR', sans-serif;
+            min-height: 100vh;
+            padding: 0;
         }
-        form {
-            margin-top: 30px;
+
+        /* 상단 네비게이션 */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            padding: 20px 24px 10px;
         }
-        .tag-box {
-            display: inline-block;
-            text-align: left;
-            margin: 10px;
-        }
-        label {
-            display: block;
-            margin: 5px 0;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
+
+        .back-btn {
+            background: none;
             border: none;
-            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15px;
+            color: #555;
+            padding: 0;
         }
-        button:hover {
-            background-color: #45a049;
+
+        .back-btn:hover {
+            color: #222;
         }
-        a {
-            display: block;
-            margin-top: 30px;
+
+        .page-title {
+            padding: 8px 24px 24px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #222;
+        }
+
+        /* 카드 컨테이너 */
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            margin: 0 16px;
+            padding: 28px 24px 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: #aaa;
+            font-weight: 400;
+        }
+
+        /* 태그 그리드 (2열) */
+        .tag-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        /* 태그 버튼 */
+        .tag-btn {
+            background: #f5f4f0;
+            border: 2px solid transparent;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: #444;
+            padding: 18px 10px;
+            transition: all 0.18s ease;
+            text-align: center;
+        }
+
+        .tag-btn:hover {
+            background: #eeecea;
+        }
+
+        .tag-btn.selected {
+            background: #fff7f0;
+            border-color: #f4845f;
+            color: #e86835;
+        }
+
+        /* 추천받기 버튼 */
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: #e0ddd6;
+            color: #aaa;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: not-allowed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .submit-btn.active {
+            background: #f4845f;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(244, 132, 95, 0.35);
+        }
+
+        .submit-btn.active:hover {
+            background: #e86835;
+            transform: translateY(-1px);
         }
     </style>
 </head>
 <body>
 
-    <h1>🏷 태그별 메뉴 추천</h1>
+    <nav class="top-nav">
+        <button class="back-btn" onclick="history.back()">← 돌아가기</button>
+    </nav>
 
-    <form action="/result" method="POST">
-        <input type="hidden" name="mode" value="tags">
+    <div class="page-title">태그 기반 추천</div>
 
-        <div class="tag-box">
-            {% for tag in tags %}
-                <label>
-                    <input type="checkbox" name="tags" value="{{ tag }}">
+    <div class="card">
+        <form action="/result" method="POST" id="tagForm">
+
+            <input type="hidden" name="mode" value="tags">
+
+            <div class="card-header">
+                <div class="card-title">원하는 특성을 선택하세요</div>
+                <div class="card-subtitle">여러 개 선택 가능합니다</div>
+            </div>
+
+            <!-- 태그 그리드 -->
+            <div class="tag-grid">
+                {% for tag in tags %}
+                <button type="button" class="tag-btn" onclick="toggleTag(this, '{{ tag }}')">
                     {{ tag }}
-                </label>
-            {% endfor %}
-        </div>
+                </button>
+                {% endfor %}
+            </div>
 
-        <div>
-            <button type="submit">추천 받기</button>
-        </div>
-    </form>
+            <!-- 추천받기 버튼 -->
+            <button type="submit" class="submit-btn" id="submitBtn">
+                ✦ 메뉴 추천받기
+            </button>
 
-    <a href="/">← 메인으로 돌아가기</a>
+        </form>
+    </div>
+
+<script>
+    let selectedTags = [];
+
+    function toggleTag(button, tag) {
+        if (button.classList.contains("selected")) {
+            button.classList.remove("selected");
+            selectedTags = selectedTags.filter(t => t !== tag);
+
+            // hidden input 제거
+            const existing = document.querySelector(`input[name="tags"][value="${tag}"]`);
+            if (existing) existing.remove();
+        } else {
+            button.classList.add("selected");
+            selectedTags.push(tag);
+
+            // hidden input 추가
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "tags";
+            input.value = tag;
+            document.getElementById("tagForm").appendChild(input);
+        }
+
+        updateSubmitBtn();
+    }
+
+    function updateSubmitBtn() {
+        const btn = document.getElementById("submitBtn");
+        if (selectedTags.length > 0) {
+            btn.classList.add("active");
+        } else {
+            btn.classList.remove("active");
+        }
+    }
+
+    document.getElementById("tagForm").addEventListener("submit", function(e) {
+        if (selectedTags.length === 0) {
+            alert("태그를 하나 이상 선택해주세요.");
+            e.preventDefault();
+        }
+    });
+</script>
 
 </body>
 </html>
