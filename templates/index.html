@@ -1,38 +1,104 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>메뉴 추천 서비스</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            margin-top: 100px;
-        }
-        h1 {
-            margin-bottom: 40px;
-        }
-        .btn {
-            display: inline-block;
-            margin: 20px;
-            padding: 15px 30px;
-            font-size: 18px;
-            text-decoration: none;
-            color: white;
-            background-color: #4CAF50;
-            border-radius: 8px;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>메뉴 추천</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+        background-color: #f5efe6; /* 베이지톤 배경 */
+        text-align: center;
+    }
+
+    .wrapper {
+        padding: 60px 20px;
+        max-width: 500px;
+        margin: auto;
+    }
+
+    h1 {
+        color: #ff5a00;
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        color: #5c6670;
+        font-size: 18px;
+        margin-bottom: 50px;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 30px;
+        padding: 50px 30px;
+        margin-bottom: 40px;
+        text-decoration: none;
+        display: block;
+        color: #2b2f33;
+        box-shadow: 0 10px 25px rgba(255, 255, 255, 0.08);
+        transition: transform 0.2s ease;
+    }
+
+    .card:active {
+        transform: scale(0.97);
+    }
+
+    .icon-circle {
+        width: 110px;
+        height: 110px;
+        background-color: #f2d9b6;
+        border-radius: 50%;
+        margin: 0 auto 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+    }
+
+    .card-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .card-desc {
+        font-size: 17px;
+        color: #5c6670;
+        line-height: 1.6;
+    }
+</style>
 </head>
+
 <body>
 
-    <h1>🍽 메뉴 추천 서비스</h1>
+<div class="wrapper">
 
-    <a href="/condition" class="btn">상황별 추천</a>
-    <a href="/tags" class="btn">태그별 추천</a>
+    <h1>오늘 뭐 먹지?</h1>
+    <div class="subtitle">상황에 맞는 메뉴를 추천해드립니다</div>
+
+    <a href="/condition" class="card">
+        <div class="icon-circle">🍴</div>
+        <div class="card-title">상황 기반 추천</div>
+        <div class="card-desc">
+            인원수와 시간대를 선택하면<br>
+            딱 맞는 메뉴를 추천해드려요
+        </div>
+    </a>
+
+    <a href="/tags" class="card">
+        <div class="icon-circle" style="background-color:#f5e7b8;">🏷️</div>
+        <div class="card-title">태그 기반 추천</div>
+        <div class="card-desc">
+            원하는 특성을 선택하면<br>
+            취향에 맞는 메뉴를 찾아드려요
+        </div>
+    </a>
+
+</div>
 
 </body>
 </html>
