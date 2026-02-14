@@ -83,20 +83,22 @@ def tags_page():
 def result_page():
     menus = load_all_menus()
     result = None
-
     mode = request.form.get("mode")
 
     if mode == "condition":
         meal_time = request.form.get("meal_time")
         people = int(request.form.get("people", 1))
         result = recommend_by_condition(menus, meal_time, people)
+        return render_template("result.html", result=result, mode=mode,
+                               meal_time=meal_time, people=people)
 
     elif mode == "tags":
         selected_tags = request.form.getlist("tags")
         result = recommend_by_tags(menus, selected_tags)
+        return render_template("result.html", result=result, mode=mode,
+                               selected_tags=selected_tags)
 
-    return render_template("result.html", result=result)
-
+    return render_template("result.html", result=None)
 
 # 실행
 if __name__ == "__main__":
